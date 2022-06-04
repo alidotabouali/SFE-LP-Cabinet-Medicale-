@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/html"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="content1">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="row">
+            <div class="row align-items-center">
+                <div class="border-0 mb-4">
+                    <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
+                        <h3 class="fw-bold mb-0">liste des Rendez-Vous</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-datatable table-responsive">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                        <form method="get" th:action="@{/user/calendrier}">
+                            <div class="row mx-2">
+                                <div class="col-md-2">
+                                    <div class="me-3">
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
+                                        <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                            <label><input type="date" class="form-control"
+                                                          aria-controls="DataTables_Table_0" name="date"
+                                                          th:value="${date}" >
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <table class="datatables-users table border-top dataTable no-footer dtr-column"
+                               id="DataTables_Table_0" role="grid"
+                               aria-describedby="DataTables_Table_0_info" style="width: 1211px;">
+                            <thead>
+                            <tr role="row">
+                                <th class="control sorting_disabled" rowspan="1" colspan="1"
+                                    style="width: 0px; display: none;" aria-label=""></th>
+                                <th class="sorting sorting_desc" tabindex="0"
+                                    aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                    style="width: 140px;"
+                                    aria-label="User: activate to sort column ascending"
+                                    aria-sort="descending">Patient
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1" colspan="1" style="width: 80px;"
+                                    aria-label="Plan: activate to sort column ascending">Time
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1" colspan="1" style="width: 55px;"
+                                    aria-label="Billing: activate to sort column ascending">reason
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1" colspan="1" style="width: 91px;"
+                                    aria-label="Status: activate to sort column ascending">numéro de téléphone
+                                </th>
+                                <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 70px;"
+                                    aria-label="Actions">Actions
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="odd" id="patient" th:each="rendezvous:${listrendezvous}">
+                                <td class=" control" tabindex="0" style="display: none;"></td>
+                                <td class="sorting_1">
+                                    <div class="d-flex justify-content-start align-items-center">
+                                        <div class="avatar-wrapper">
+                                            <div class="avatar avatar-sm me-3"><img
+                                                    th:src="${rendezvous.patient.gender=='Homme'?'/img/avatars/5.png':'/img/avatars/6.png'}"
+                                                    alt="Avatar"
+                                                    class="rounded-circle"></div>
+                                        </div>
+                                        <div class="d-flex flex-column"><span
+                                                class="fw-semibold text-body text-truncate"
+                                                th:text="${rendezvous.patient.fullname}"
+                                        ></span>
+                                            <small class="text-muted" th:text="${rendezvous.patient.email}"></small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="badge bg-label-success" th:text="${rendezvous.time}"></span></td>
+                                <td><span class="text-muted" th:text="${rendezvous.reson}" ></span></td>
+                                <td><span class="badge bg-label-primary" th:text="${rendezvous.patient.phonenumber}"></span></td>
+                                <td sec:authorize="hasAuthority('USER')">
+                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+<!--
+                                        <a th:href="@{/admin/editepatient(id=${patient.id},keyword=${keyword},page=${currentPage})}"
+                                           class="me-2">
+                                            <button type="button" class="btn btn-outline-secondary" style="padding: -0.5625rem 0.75rem">
+                                                <i class="menu-icon tf-icons bx bx-edit text-success "></i>
+                                            </button>
+                                        </a>
+                                        <a th:href="@{/admin/deletepatient(id=${patient.id},keyword=${keyword},page=${currentPage})}"
+                                           class="me-2">
+                                            <button th:onclick="confirm('Delete entry?')" type="button" class="btn btn-outline-secondary" style="padding: -0.5625rem 0.75rem">
+                                                <i class="menu-icon tf-icons bx bx-trash text-danger "></i>
+                                            </button>
+                                        </a>
+                                        <a href="javascript:;" data-bs-target="#editUser"
+                                           data-bs-toggle="modal" class="me-2">
+                                            <button type="button" class="btn btn-outline-secondary" role="dialog" style="padding: -0.5625rem 0.75rem">
+                                                <i class="menu-icon tf-icons bx bx-show"
+                                                   style="color: rgb(3 195 236 / 40%)"></i>
+                                            </button>
+                                        </a>
+                                        <a th:href="@{/user/rendesvous(id=${patient.id})}">
+                                            <button type="button" class="btn btn-outline-secondary" style="padding: -0.5625rem 0.75rem">
+                                                <i class="menu-icon tf-icons bx bx-plus text-primary "></i>
+                                            </button>
+                                        </a>
+-->
+                                    </div>
+                                </td>
+
+                            </tbody>
+                        </table>
+                        <div class="row mx-2">
+                            <div class="col-sm-12 col-md-6">
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_paginate paging_simple_numbers"
+                                     id="DataTables_Table_0_paginate">
+                                    <ul class="pagination">
+                                        <li class="paginate_button page-item previous disabled"
+                                            id="DataTables_Table_0_previous"><a href="#"
+                                                                                aria-controls="DataTables_Table_0"
+                                                                                class="page-link">Previous</a>
+                                        </li>
+                                        <li th:each="page,status:${pages}"
+                                            th:class="${status.index==currentPage?'paginate_button page-item active':'paginate_button page-item'}">
+                                            <a th:text="${status.index+1}"
+                                               th:href="@{/user/calendrier(page=${status.index},keyword=${keyword})}"
+                                               aria-controls="DataTables_Table_0"
+                                               class="page-link"></a>
+                                        </li>
+                                        <li class="paginate_button page-item next"
+                                            id="DataTables_Table_0_next"><a href="#"
+                                                                            aria-controls="DataTables_Table_0"
+                                                                            class="page-link">Next</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

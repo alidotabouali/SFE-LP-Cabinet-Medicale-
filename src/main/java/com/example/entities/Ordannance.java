@@ -19,8 +19,8 @@ public class Ordannance {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
-    @OneToMany(mappedBy = "ordannance")
-    private Collection<Patient> patients;
+    @ManyToOne
+    private Patient patient;
     @OneToMany(mappedBy = "ordannance")
     private Collection<Medicament> medicaments;
     @OneToOne(mappedBy = "ordannance")

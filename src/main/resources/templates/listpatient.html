@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="template"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        xmlns="http://www.w3.org/1999/html"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>TiemaCab</title>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+
+</head>
+
+<body>
+<div layout:fragment="content1">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="row">
+            <div class="row align-items-center">
+                <div class="border-0 mb-4">
+                    <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
+                        <h3 class="fw-bold mb-0">liste des patients</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-datatable table-responsive">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                        <form method="get" th:action="@{/user/listpatient}">
+                            <div class="row mx-2">
+                                <div class="col-md-2">
+                                    <div class="me-3">
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
+                                        <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                            <label><input type="search" class="form-control"
+                                                          placeholder="Search.."
+                                                          aria-controls="DataTables_Table_0" name="keyword"
+                                                          th:value="${keyword}">
+                                            </label>
+                                        </div>
+                                        <div class="dt-buttons m-lg-4">
+                                            <a sec:authorize="hasAuthority('USER')" th:href="@{/admin/addpatient}">
+                                                <button class="dt-button add-new btn btn-primary" tabindex="0"
+                                                        aria-controls="DataTables_Table_0" type="button"
+                                                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddUser">
+                                                <span><i class="bx bx-plus me-0 me-sm-2"></i>
+                                                    <span class="d-none d-lg-inline-block">Ajouter Neuveau Patient</span>
+                                                </span>
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <table class="datatables-users table border-top dataTable no-footer dtr-column"
+                               id="DataTables_Table_0" role="grid"
+                               aria-describedby="DataTables_Table_0_info" style="width: 1211px;">
+                            <thead>
+                            <tr role="row">
+                                <th class="control sorting_disabled" rowspan="1" colspan="1"
+                                    style="width: 0px; display: none;" aria-label=""></th>
+                                <th class="sorting sorting_desc" tabindex="0"
+                                    aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                    style="width: 140px;"
+                                    aria-label="User: activate to sort column ascending"
+                                    aria-sort="descending">Patient
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1" colspan="1" style="width: 45px;"
+                                    aria-label="Role: activate to sort column ascending">CIN
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1" colspan="1" style="width: 80px;"
+                                    aria-label="Plan: activate to sort column ascending">date d'anniversaire
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1" colspan="1" style="width: 55px;"
+                                    aria-label="Billing: activate to sort column ascending">sexe
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1" colspan="1" style="width: 91px;"
+                                    aria-label="Status: activate to sort column ascending">numéro de téléphone
+                                </th>
+                                <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 70px;"
+                                    aria-label="Actions">Actions
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="odd" id="patient" th:each="patient:${listPatinets}">
+                                <td class=" control" tabindex="0" style="display: none;"></td>
+                                <td class="sorting_1">
+                                    <div class="d-flex justify-content-start align-items-center">
+                                        <div class="avatar-wrapper">
+                                            <div class="avatar avatar-sm me-3"><img
+                                                    th:src="${patient.gender=='Homme'?'/img/avatars/5.png':'/img/avatars/6.png'}"
+                                                    alt="Avatar"
+                                                    class="rounded-circle"></div>
+                                        </div>
+                                        <div class="d-flex flex-column"><span
+                                                class="fw-semibold text-body text-truncate"
+                                                th:text="${patient.fullname}"
+                                        ></span>
+                                            <small class="text-muted" th:text="${patient.email}"></small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-primary" th:text="${patient.CIN}"></td>
+                                <td><span class="fw-semibold" th:text="${patient.datebrith}"></span></td>
+                                <td th:text="${patient.gender}"></td>
+                                <td><span class="badge bg-label-success" th:text="${patient.phonenumber}"></span></td>
+                                <td sec:authorize="hasAuthority('ADMIN')">
+                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+
+                                        <a th:href="@{/admin/editepatient(id=${patient.id},keyword=${keyword},page=${currentPage})}"
+                                           class="me-2">
+                                            <button type="button" class="btn btn-outline-secondary" style="padding: -0.5625rem 0.75rem">
+                                                <i class="menu-icon tf-icons bx bx-edit text-success "></i>
+                                            </button>
+                                        </a>
+                                        <a th:href="@{/admin/deletepatient(id=${patient.id},keyword=${keyword},page=${currentPage})}"
+                                           class="me-2">
+                                            <button th:onclick="confirm('Delete entry?')" type="button" class="btn btn-outline-secondary" style="padding: -0.5625rem 0.75rem">
+                                                <i class="menu-icon tf-icons bx bx-trash text-danger "></i>
+                                            </button>
+                                        </a>
+                                        <a href="javascript:;" data-bs-target="#editUser"
+                                           data-bs-toggle="modal" class="me-2">
+                                            <button type="button" class="btn btn-outline-secondary" role="dialog" style="padding: -0.5625rem 0.75rem">
+                                                <i class="menu-icon tf-icons bx bx-show"
+                                                   style="color: rgb(3 195 236 / 40%)"></i>
+                                            </button>
+                                        </a>
+                                        <a th:href="@{/user/rendesvous(id=${patient.id})}">
+                                            <button type="button" class="btn btn-outline-secondary" style="padding: -0.5625rem 0.75rem">
+                                                <i class="menu-icon tf-icons bx bx-plus text-primary "></i>
+                                            </button>
+                                        </a>
+
+                                    </div>
+                                </td>
+                                <!--Modal user info-->
+                                <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true" >
+                                    <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+                                        <div class="modal-content p-3 p-md-5">
+                                            <div class="modal-body">
+                                                <!--Content-->
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                <div class="text-center mb-4">
+                                                    <h3>Les Informations de patient</h3>
+                                                </div>
+                                                <div class="container-xxl flex-grow-1 container-p-y">
+                                                    <div class="row">
+                                                        <div class="card mb-4">
+                                                            <div class="card-body">
+                                                                <div class="user-avatar-section mb-3">
+                                                                    <div class=" d-flex align-items-center flex-column">
+                                                                        <img class="img-fluid rounded my-4"
+                                                                             th:src="${patient.gender=='Homme'?'/img/avatars/5.png':'/img/avatars/6.png'}"
+                                                                             height="110"
+                                                                             width="110" alt="User avatar">
+                                                                        <div class="user-info text-center">
+                                                                            <h4 class="mb-2"
+                                                                                th:text="${patient.fullname}"></h4>
+                                                                            <span class="badge bg-label-secondary"
+                                                                                  th:text="${patient.CIN}"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <h5 class="pb-2 border-bottom mb-4">Details</h5>
+                                                                <div class="info-container">
+                                                                    <ul class="list-unstyled">
+                                                                        <li class="mb-3">
+                                                                            <span class="fw-bold me-2">Email:</span>
+                                                                            <span th:text="${patient.email}"></span>
+                                                                        </li>
+                                                                        <li class="mb-3">
+                                                                            <span class="fw-bold me-2">Numéro de téléphone:</span>
+                                                                            <span th:text="${patient.phonenumber}"></span>
+                                                                        </li>
+                                                                        <li class="mb-3">
+                                                                            <span class="fw-bold me-2">Date d'anniversaire:</span>
+                                                                            <span th:text="${patient.datebrith}"></span>
+                                                                        </li>
+                                                                        <li class="mb-3">
+                                                                            <span class="fw-bold me-2">Adresse:</span>
+                                                                            <span th:text="${patient.address}"></span>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/ User Content -->
+                                                    </div>
+                                                </div>
+                                                <!--/Content -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/Modal user info-->
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="row mx-2">
+                            <div class="col-sm-12 col-md-6">
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_paginate paging_simple_numbers"
+                                     id="DataTables_Table_0_paginate">
+                                    <ul class="pagination">
+                                        <li class="paginate_button page-item previous disabled"
+                                            id="DataTables_Table_0_previous"><a href="#"
+                                                                                aria-controls="DataTables_Table_0"
+                                                                                class="page-link">Previous</a>
+                                        </li>
+                                        <li th:each="page,status:${pages}"
+                                            th:class="${status.index==currentPage?'paginate_button page-item active':'paginate_button page-item'}">
+                                            <a th:text="${status.index+1}"
+                                               th:href="@{/user/listpatient(page=${status.index},keyword=${keyword})}"
+                                               aria-controls="DataTables_Table_0"
+                                               class="page-link"></a>
+                                        </li>
+                                        <li class="paginate_button page-item next"
+                                            id="DataTables_Table_0_next"><a href="#"
+                                                                            aria-controls="DataTables_Table_0"
+                                                                            class="page-link">Next</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>
+<script>
+    (function () {
+        var ws = new WebSocket('ws://' + window.location.host + '/jb-server-page?reloadServiceClientId=32');
+        ws.onmessage = function (msg) {
+            if (msg.data === 'reload') {
+                window.location.reload();
+            }
+            if (msg.data.startsWith('update-css ')) {
+                var messageId = msg.data.substring(11);
+                var links = document.getElementsByTagName('link');
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    if (link.rel !== 'stylesheet') continue;
+                    var clonedLink = link.cloneNode(true);
+                    var newHref = link.href.replace(/(&|\?)jbUpdateLinksId=\d+/, "$1jbUpdateLinksId=" + messageId);
+                    if (newHref !== link.href) {
+                        clonedLink.href = newHref;
+                    } else {
+                        var indexOfQuest = newHref.indexOf('?');
+                        if (indexOfQuest >= 0) {
+                            // to support ?foo#hash
+                            clonedLink.href = newHref.substring(0, indexOfQuest + 1) + 'jbUpdateLinksId=' + messageId + '&' +
+                                newHref.substring(indexOfQuest + 1);
+                        } else {
+                            clonedLink.href += '?' + 'jbUpdateLinksId=' + messageId;
+                        }
+                    }
+                    link.replaceWith(clonedLink);
+                }
+            }
+        };
+    })();
+</script>

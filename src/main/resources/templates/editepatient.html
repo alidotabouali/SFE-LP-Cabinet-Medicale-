@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template"
+
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Edite Patient</title>
+</head>
+<body>
+<div layout:fragment="content1">
+    <div class="body d-flex py-3">
+        <div class="container-xxl">
+            <div class="row align-items-center">
+                <div class="border-0 mb-4">
+                    <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
+                        <h3 class="fw-bold mb-0">Patient Overview</h3>
+                    </div>
+                </div>
+            </div> <!-- Row end  -->
+            <div class="row g-3 mb-3">
+                <div class="col-xl-4 col-lg-12 col-md-12">
+                    <div class="card teacher-card mb-3 flex-column">
+                        <div class="card-body d-flex teacher-fulldeatil flex-column">
+                            <div class="profile-teacher text-center w220 mx-auto">
+                                <img class="img-fluid rounded my-0"  th:src="${patient.gender=='Homme'?'/img/avatars/5.png':'/img/avatars/6.png'}" height="110" width="110" alt="User avatar">
+                                <div class="about-info d-flex align-items-center mt-3 justify-content-center flex-column">
+                                    <span class="text-muted small">CIN : <span th:text="${patient.CIN}"></span></span>
+                                </div>
+                            </div>
+                            <div class="teacher-info   w-100">
+                                <h6 class="mb-0 mt-2  fw-bold d-block fs-6 text-center"
+                                    th:text="${patient.fullname}"></h6>
+                                <div class="row g-2 pt-2">
+                                    <div class="col-xl-12">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bx bx-mobile"></i>
+                                            <span class="ms-2" th:text="${patient.phonenumber}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bx bx-envelope"></i>
+                                            <span class="ms-2" th:text="${patient.email}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bx bx-calendar-star"></i>
+                                            <span class="ms-2" th:text="${patient.datebrith}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bx bx-map"></i>
+                                            <span class="ms-2" th:text="${patient.address}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-8 col-lg-12 col-md-12">
+                    <div class="row mb-3">
+                        <div class="col-sm-12">
+                            <form method="post" th:action="@{/admin/editepatient(id=${patient.id},page=${page},keyword=${keyword})}">
+                                <div class="card mb-3">
+                                    <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                                        <h6 class="mb-0 fw-bold ">Informations Personnelles</h6>
+                                        <button type="submit" class="btn btn-success"
+                                                >Modifier
+                                        </button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-md-6">
+                                                <label for="fullname" class="form-label">Nom complet</label>
+                                                <input type="text" name="fullname" th:value="${patient.fullname}"
+                                                       class="form-control" id="fullname">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="CIN" class="form-label">CIN</label>
+                                                <input type="text" name="CIN" th:value="${patient.CIN}"
+                                                       class="form-control"
+                                                       id="CIN">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="datebrith" class="form-label">Date d'anniversaire</label>
+                                                <input type="date" th:value="${patient.datebrith}" name="datebrith"
+                                                       class="form-control" id="datebrith" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Le sexe</label>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio"
+                                                                   th:if="${patient.gender == 'Homme'}" checked  name="gender"
+                                                                   id="exampleRadios11" value="Homme">
+                                                            <label class="form-check-label" for="exampleRadios11">
+                                                                Homme
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio"
+                                                                   th:if="${patient.gender == 'Femelle'}" checked name="gender"
+                                                                   id="exampleRadios22" value="Femelle">
+                                                            <label class="form-check-label" for="exampleRadios22">
+                                                                Femelle
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="email" class="form-label">Adresse e-mail</label>
+                                                <input type="email" th:value="${patient.email}" name="email"
+                                                       class="form-control" id="email" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="phonenumber" class="form-label">Numéro de téléphone</label>
+                                                <input type="text" th:value="${patient.phonenumber}" name="phonenumber"
+                                                       class="form-control" id="phonenumber">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="address" class="form-label">adresse</label>
+                                                <textarea name="address" th:text="${patient.address}"
+                                                          class="form-control" id="address" rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- Row End -->
+        </div>
+    </div>
+</div>
+</body>
+</html>

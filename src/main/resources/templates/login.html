@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+
+>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+
+    <title>Login</title>
+
+    <meta name="description"
+          content="Most Powerful &amp; Comprehensive Bootstrap 5 HTML Admin Dashboard Template built for developers!"/>
+    <meta name="keywords" content="dashboard, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
+    <!-- Canonical SEO -->
+    <link rel="canonical" href="https://themeselection.com/products/sneat-bootstrap-html-admin-template/">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" th:href="@{/img/favicon/logo1.ico}"/>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+          rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" th:href="@{/vendor/fonts/boxicons.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/fonts/fontawesome.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/fonts/flag-icons.css}"/>
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" th:href="@{/vendor/css/rtl/core-dark.css}" class="template-customizer-core-css"/>
+    <link rel="stylesheet" th:href="@{/vendor/css/rtl/theme-default-dark.css}"
+          class="template-customizer-theme-css"/>
+    <link rel="stylesheet" th:href="@{/css/demo.css}"/>
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" th:href="@{/vendor/libs/perfect-scrollbar/perfect-scrollbar.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/libs/typeahead-js/typeahead.css}"/>
+    <!-- Vendor -->
+    <link rel="stylesheet" th:href="@{/vendor/libs/formvalidation/dist/css/formValidation.min.css}"/>
+
+    <!-- Page CSS -->
+    <!-- Page -->
+    <link rel="stylesheet" th:href="@{/vendor/css/pages/page-auth.css}">
+    <!-- Helpers -->
+    <script th:src="@{/vendor/js/helpers.js}"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
+    <script th:src="@{/vendor/js/template-customizer.js}"></script>
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script th:src="@{/js/config.js}"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+</head>
+<body>
+<div class="authentication-wrapper authentication-cover">
+    <div class="authentication-inner row m-0">
+        <!-- /Left Text -->
+        <div class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center p-5">
+            <div class="w-100 d-flex justify-content-center">
+                <img th:src="@{/img/illustrations/login.png}" class="img-fluid" alt="Login image"
+                     width="500" height="500" data-app-dark-img="illustrations/boy-with-rocket-dark.png"
+                     data-app-light-img="illustrations/boy-with-rocket-light.png">
+            </div>
+        </div>
+        <!-- /Left Text -->
+
+        <!-- Login -->
+        <div style="background-color: #2a2b4b" class="d-flex col-12 col-lg-5 col-xl-4 align-items-center authentication-bg p-sm-5 p-4">
+            <div class="w-px-400 mx-auto">
+                <!-- Logo -->
+                <div class="app-brand mb-5">
+                     <span class="app-brand-logo demo">
+                           <img class="app-brand-logo" th:src="@{/img/logo/logo.png}" width="200px" height="50px">
+                     </span>
+                </div>
+                <!-- /Logo -->
+                <h4 class="mb-2">Bienvenue à TiemaCab! 👋</h4>
+                <p class="mb-4">Veuillez vous connecter à votre compte et commencer l'aventure</p>
+
+                <form id="formAuthentication" class="mb-3 fv-plugins-bootstrap5 fv-plugins-framework"
+                      th:action="@{/login}" method="POST" novalidate="novalidate">
+                    <div class="mb-3 fv-plugins-icon-container">
+                        <label for="username" class="form-label">Nom d'utilisateur</label>
+                        <input type="text" class="form-control" id="username" name="username"
+                               placeholder="username" autofocus="" required>
+                        <span class="text-danger" th:errors="${appuser.username}"></span>
+                        <div class="fv-plugins-message-container invalid-feedback"></div>
+                    </div>
+                    <div class="mb-3 form-password-toggle fv-plugins-icon-container">
+                        <div class="d-flex justify-content-between">
+                            <label class="form-label" for="password">Mot de passe</label>
+                        </div>
+                        <div class="input-group input-group-merge has-validation">
+                            <input type="password" id="password" class="form-control" name="password"
+                                   placeholder="············" aria-describedby="password">
+                            <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                        </div>
+                        <div class="fv-plugins-message-container invalid-feedback"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary d-grid w-100">
+                        Log in
+                    </button>
+                </form>
+            </div>
+        </div>
+        <!-- /Login -->
+    </div>
+</div>
+<!-- Core JS -->
+<script th:src="@{/vendor/libs/hammer/hammer.js}"></script>
+<script th:src="@{/vendor/libs/i18n/i18n.js}"></script>
+<script th:src="@{/vendor/libs/typeahead-js/typeahead.js}"></script>
+<!-- build:js assets/vendor/js/core.js -->
+<script th:src="@{/vendor/libs/jquery/jquery.js}"></script>
+<script th:src="@{/vendor/libs/popper/popper.js}"></script>
+<script th:src="@{/vendor/js/bootstrap.js}"></script>
+<script th:src="@{/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
+
+<script th:src="@{/vendor/js/menu.js}"></script>
+<!-- endbuild -->
+
+<!-- Vendors JS -->
+<script th:src="@{/vendor/libs/apex-charts/apexcharts.js}"></script>
+<script th:src="@{/vendor/libs/moment/moment.js}"></script>
+<script th:src="@{/vendor/libs/datatables/jquery.dataTables.js}"></script>
+<script th:src="@{/vendor/libs/datatables-bs5/datatables-bootstrap5.js}"></script>
+<script th:src="@{/vendor/libs/datatables-responsive/datatables.responsive.js}"></script>
+<script th:src="@{/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.js}"></script>
+<script th:src="@{/vendor/libs/datatables-buttons/datatables-buttons.js}"></script>
+<script th:src="@{/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.js}"></script>
+<script th:src="@{/vendor/libs/jszip/jszip.js}"></script>
+<script th:src="@{/vendor/libs/pdfmake/pdfmake.js}"></script>
+<script th:src="@{/vendor/libs/datatables-buttons/buttons.html5.js}"></script>
+<script th:src="@{/vendor/libs/datatables-buttons/buttons.print.js}"></script>
+<script th:src="@{/vendor/libs/select2/select2.js}"></script>
+<script th:src="@{/vendor/libs/formvalidation/dist/js/FormValidation.min.js}"></script>
+<script th:src="@{/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js}"></script>
+<script th:src="@{/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js}"></script>
+<script th:src="@{/vendor/libs/cleavejs/cleave.js}"></script>
+<script th:src="@{/vendor/libs/cleavejs/cleave-phone.js}"></script>
+
+<!-- Main JS -->
+<script th:src="@{/js/main.js}"></script>
+
+<!-- Page JS -->
+<script th:src="@{/js/dashboards-analytics.js}"></script>
+<script th:src="@{/js/tables-datatables-extensions.js}"></script>
+<script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+
+</body>
+</html>

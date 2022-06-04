@@ -13,8 +13,7 @@ public class Medecin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String Name;
-    private String lastname;
+    private String fullname;
     private String address;
     private String email;
     private String phonenumber;

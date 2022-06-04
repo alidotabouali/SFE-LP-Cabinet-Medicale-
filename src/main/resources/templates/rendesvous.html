@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/html"
+
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="content1">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="row">
+            <!-- patient Sidebar -->
+            <div class="col-xl-4 col-lg-5 col-md-5 order-1 order-md-0">
+                <!-- patient Card -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="user-avatar-section mb-3">
+                            <div class=" d-flex align-items-center flex-column">
+                                <img class="img-fluid rounded my-4"
+                                     th:src="${patient.gender=='Homme'?'/img/avatars/5.png':'/img/avatars/6.png'}"
+                                     height="110" width="110" alt="User avatar">
+                                <div class="user-info text-center">
+                                    <h4 class="mb-2" th:text="${patient.fullname}"></h4>
+                                    <span class="badge bg-label-secondary" th:text="${patient.CIN}"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <h5 class="pb-2 border-bottom mb-4">Details</h5>
+                        <div class="info-container">
+                            <ul class="list-unstyled">
+                                <li class="mb-3">
+                                    <span class="fw-bold me-2">Email:</span>
+                                    <span th:text="${patient.email}"></span>
+                                </li>
+                                <li class="mb-3">
+                                    <span class="fw-bold me-2">Contact:</span>
+                                    <span class="badge bg-label-success" th:text="${patient.phonenumber}"></span>
+                                </li>
+                                <li class="mb-3">
+                                    <span class="fw-bold me-2">Date</span>
+                                    <span th:text="${patient.datebrith}"></span>
+                                </li>
+                                <li class="mb-3">
+                                    <span class="fw-bold me-2">Adresse:</span>
+                                    <span th:text="${patient.address}"></span>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /patient Card -->
+            </div>
+            <!--/ patient Sidebar -->
+
+
+            <!-- patient Content -->
+            <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
+                <!-- head -->
+                <ul class="nav nav-pills flex-column flex-md-row mb-3">
+                    <li class="nav-item">
+                        <a class="nav-link active">
+                            <i class="bx bx-calendar me-1"></i>
+                            Rendez Vous
+                        </a>
+                    </li>
+                </ul>
+                <!-- /head -->
+
+                <!-- liste Rendezvous -->
+                <div class="card mb-4">
+                    <div class="card">
+                        <div class="card-datatable table-responsive">
+                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                                <table class="datatables-users table border-top dataTable no-footer dtr-column"
+                                       id="DataTables_Table_0" role="grid"
+                                       aria-describedby="DataTables_Table_0_info" style="width: 1211px;">
+                                    <thead>
+                                    <tr role="row">
+                                        <th class="control sorting_disabled" rowspan="1" colspan="1"
+                                            style="width: 0px; display: none;" aria-label=""></th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                            rowspan="1" colspan="1" style="width: 70px;"
+                                            aria-label="Plan: activate to sort column ascending">date
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                            rowspan="1" colspan="1" style="width: 30px;"
+                                            aria-label="Billing: activate to sort column ascending">Temps
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                            rowspan="1" colspan="1" style="width: 91px;"
+                                            aria-label="Status: activate to sort column ascending">Reasone
+                                        </th>
+                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 80px;"
+                                            aria-label="Actions">Actions
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="odd" th:each="rendesvous:${rendezVousList}">
+                                        <td class="text-primary" th:text="${rendesvous.date}"></td>
+                                        <td><span class="badge bg-label-success"
+                                                  th:text="${rendesvous.time}"></span>
+                                        </td>
+                                        <td th:text="${rendesvous.reson}"></td>
+                                        <td sec:authorize="hasAuthority('USER')">
+                                            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                                <a th:href="@{/user/editerendesvous(id=${rendesvous.id})}"
+                                                   class="me-2">
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                            style="padding: -0.5625rem 0.75rem">
+                                                        <i class="menu-icon tf-icons bx bx-edit text-success "></i>
+                                                    </button>
+                                                </a>
+                                                <a th:href="@{/user/deleterendesvous(id=${rendesvous.id},idPatient=${patient.id})}"
+                                                   class="me-2">
+                                                    <button th:onclick="confirm('Delete entry?')" type="button"
+                                                            class="btn btn-outline-secondary"
+                                                            style="padding: -0.5625rem 0.75rem">
+                                                        <i class="menu-icon tf-icons bx bx-trash text-danger "></i>
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="row mx-2">
+                                    <div class="col-sm-12 col-md-6">
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <button class="dt-button add-new btn btn-primary" type="button"
+                                                data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                <span><i class="bx bx-plus me-0 me-sm-2"></i>
+                                                    <span class="d-none d-lg-inline-block">Ajouter Neuveau Patient</span>
+                                                </span>
+                                        </button>
+                                        </a>
+                                    </div>
+                                </div>
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content" style="width: 50%">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Ajoute Rendez-vous</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <form >
+                                                <div class="modal-body" >
+                                                    <div class="card-body">
+                                                        <div class="row g-3 align-items-center">
+                                                            <div class="col-md-6">
+                                                                <label for="date" class="form-label">Date</label>
+                                                                <input type="date" name="date"
+                                                                       class="form-control" id="date">
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label for="time" class="form-label">Temps </label>
+                                                                <input type="time" name="time"
+                                                                       class="form-control" id="time">
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <label for="reson" class="form-label">raison</label>
+                                                                <textarea name="reson"
+                                                                          class="form-control" id="reson"
+                                                                          rows="3"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Close
+                                                    </button>
+                                                    <button type="button" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Project table -->
+            </div>
+            <!--/ User Content -->
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

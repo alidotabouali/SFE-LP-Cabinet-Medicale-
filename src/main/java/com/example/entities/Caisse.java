@@ -9,8 +9,11 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+
 @Entity
-@Data @AllArgsConstructor @NoArgsConstructor
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Caisse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,5 +26,5 @@ public class Caisse {
     private Date date;
     private String description;
     @ManyToMany(mappedBy = "caisses", fetch = FetchType.EAGER)
-    private Collection<PatinetSettlement> patinetSettlements=new ArrayList<>();
+    private Collection<PatinetSettlement> patinetSettlements = new ArrayList<>();
 }
